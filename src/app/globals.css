@@ -1,0 +1,222 @@
+@import "tailwindcss";
+
+/* ── Brand tokens ─────────────────────────────────────────────────────────
+   Change a colour here and it updates across the whole site. */
+@theme {
+  --color-ink: #0d0d0d;
+  --color-charcoal: #1c1c1c;
+  --color-smoke: #2a2a2a;
+  --color-gold: #c9a45c;
+  --color-gold-soft: #dcc08a;
+  --color-gold-deep: #8a6d33;
+  --color-cream: #f5f0e8;
+  --color-sand: #e6dece;
+  --color-white: #ffffff;
+
+  --font-display: var(--font-cormorant), "Times New Roman", serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-ink);
+    color: var(--color-cream);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  button,
+  [role="button"],
+  select,
+  summary {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Small uppercase label used above headings and on meta text. */
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    line-height: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .container-page {
+    width: 100%;
+    max-width: 82rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .container-page {
+      padding-inline: 2rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .container-page {
+      padding-inline: 3rem;
+    }
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    min-height: 3rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+    transition:
+      background-color 0.25s var(--ease-out-soft),
+      color 0.25s var(--ease-out-soft),
+      border-color 0.25s var(--ease-out-soft),
+      transform 0.25s var(--ease-out-soft);
+  }
+  .btn:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+  .btn:disabled {
+    opacity: 0.45;
+  }
+
+  .btn-gold {
+    background: var(--color-gold);
+    color: var(--color-ink);
+  }
+  .btn-gold:hover:not(:disabled) {
+    background: var(--color-gold-soft);
+  }
+
+  .btn-outline {
+    border-color: rgb(245 240 232 / 0.35);
+    color: var(--color-cream);
+  }
+  .btn-outline:hover:not(:disabled) {
+    border-color: var(--color-gold);
+    color: var(--color-gold);
+  }
+
+  .btn-dark {
+    background: var(--color-ink);
+    color: var(--color-cream);
+  }
+  .btn-dark:hover:not(:disabled) {
+    background: var(--color-charcoal);
+  }
+
+  /* Form fields (dark surface) */
+  .field {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.75rem 1rem;
+    background: var(--color-ink);
+    border: 1px solid rgb(245 240 232 / 0.18);
+    color: var(--color-cream);
+    font-size: 1rem;
+    transition: border-color 0.2s;
+  }
+  .field::placeholder {
+    color: rgb(245 240 232 / 0.4);
+  }
+  .field:hover {
+    border-color: rgb(245 240 232 / 0.35);
+  }
+  .field:focus-visible {
+    outline: none;
+    border-color: var(--color-gold);
+    box-shadow: 0 0 0 1px var(--color-gold);
+    border-radius: 0;
+  }
+  .field[aria-invalid="true"] {
+    border-color: #e0786c;
+  }
+}
+
+/* Clip-path text section: one size drives both the SVG letters and the row height. */
+:root {
+  --clip-size: clamp(6.5rem, 23vw, 24rem);
+}
+.clip-letter {
+  font-family: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: var(--clip-size);
+}
+
+/* Endless style-name strip: the track holds two identical lists, so sliding
+   it by exactly half its width loops seamlessly. */
+@keyframes ticker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.ticker-track {
+  animation: ticker 70s linear infinite;
+}
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+  }
+}
+
+/* Thin gold scrollbar for horizontal scrollers */
+.scroll-slim {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gold-deep) transparent;
+}
