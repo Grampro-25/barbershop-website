@@ -74,7 +74,7 @@ export function Hero() {
               Your Style.
             </motion.span>
           </span>
-          <span className="block overflow-hidden pb-3">
+          <span className="block overflow-hidden pb-6 -mb-3">
             <motion.span
               className="block italic text-gold"
               initial={reduce ? false : { y: "105%" }}

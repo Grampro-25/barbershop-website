@@ -10,3 +10,6 @@ next-env.d.ts
 /data/*.db-*
 
 .vercel
+
+# Social media screenshots
+/linkedin
